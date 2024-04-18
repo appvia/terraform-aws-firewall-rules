@@ -7,4 +7,14 @@ module "rule_group" {
   rule_files = [
     "${path.root}/rules/default.rules",
   ]
+
+  ip_variables = {
+    HOME_NET = [
+      "10.0.0.0/8",
+    ]
+
+    EXTERNAL_NET = [
+      "0.0.0.0/0",
+    ]
+  }
 }
