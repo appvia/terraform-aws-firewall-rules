@@ -1,10 +1,11 @@
 ![Github Actions](../../actions/workflows/terraform.yml/badge.svg)
 
-# Terraform <NAME>
+# Terraform AWS Firewall Rules
 
 ## Description
 
-Add a description of the module here
+This module is responsible for creating AWS Network Stateful Firewall Rules. Provided a given set of rule files in Suricata format, this module will parse and validate those
+rules, providing feedback on validation errors at plan and apply time.
 
 ## Usage
 
@@ -12,10 +13,25 @@ Add example usage here
 
 ```hcl
 module "example" {
-  source  = "appvia/<NAME>/aws"
-  version = "0.0.1"
+  source  = "appvia/firewall-rules/aws"
+  version = "1.0.0"
 
-  # insert variables here
+  name     = "stateful-test"
+  ordering = "STRICT_ORDER"
+
+  rule_files = [
+    "${path.root}/rules/default.rules",
+  ]
+
+  ip_variables = {
+    HOME_NET = [
+      "10.0.0.0/8",
+    ]
+
+    EXTERNAL_NET = [
+      "0.0.0.0/0",
+    ]
+  }
 }
 ```
 
